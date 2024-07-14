@@ -16,7 +16,7 @@ function App() {
         <Route path="/sign-up" element={<SignupPage />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
-      <ToastContainer position="bottom-right" pauseOnHover="true" />
+      <ToastContainer position="bottom-right" />
     </Router>
   );
 }
