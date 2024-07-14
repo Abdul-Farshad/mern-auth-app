@@ -51,9 +51,7 @@ function Signin() {
         return navigate("/");
       }
     } catch (err) {
-      console.log(err)
       if (axios.isAxiosError(err)) {
-        console.log("dispatching error")
         dispatch(signInFailure(err.response?.data.message || "Something went wrong!"));
       } else {
         dispatch(signInFailure(err.message));
