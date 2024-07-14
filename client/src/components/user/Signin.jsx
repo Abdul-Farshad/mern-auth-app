@@ -1,10 +1,16 @@
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { toast } from "react-toastify";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "../../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 // For form validation
 const schema = yup.object().shape({
   email: yup
@@ -13,11 +19,9 @@ const schema = yup.object().shape({
     .required("Email is required")
     .trim("Whitespace not allowed")
     .strict(true),
-  password: yup
-    .string()
-    .required("Password is required")
-    .strict(true),
+  password: yup.string().required("Password is required").strict(true),
 });
+// ------------------------------------------------------------------------
 
 function Signin() {
   const {
@@ -29,31 +33,31 @@ function Signin() {
     resolver: yupResolver(schema),
   });
 
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const onSubmit = async (formData) => {
     try {
-      setLoading(true);
-      setError(null);
+      // setting loading
+      dispatch(signInStart());
       //   pass formData to back end
       const response = await axios.post("/api/user-auth/signin", formData);
       const data = response.data;
       if (data.success) {
-        setLoading(false);
-        setError(null);
+        // add data to global state
+        dispatch(signInSuccess(data.userData));
         reset();
         toast.success(data.message);
         return navigate("/");
       }
     } catch (err) {
+      console.log(err)
       if (axios.isAxiosError(err)) {
-        setError(err.response.data.message || "Signin failed");
+        console.log("dispatching error")
+        dispatch(signInFailure(err.response?.data.message || "Something went wrong!"));
       } else {
-        setError(err.message);
+        dispatch(signInFailure(err.message));
       }
-    } finally {
-      setLoading(false);
     }
   };
 
