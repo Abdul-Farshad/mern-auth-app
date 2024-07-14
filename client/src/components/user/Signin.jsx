@@ -1,6 +1,5 @@
-import "./signup.css";
 import { useState } from "react";
-import { Link , useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -8,17 +7,6 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 // For form validation
 const schema = yup.object().shape({
-  username: yup
-    .string()
-    .required("Username is required")
-    .test("no-spaces", "Whitespace not allowed", (value) => !/\s/.test(value))
-    .min(3, "Username must be at least 3 characters")
-    .max(15, "Username must be at most 15 characters")
-    .matches(
-      /^[a-zA-Z0-9]*$/,
-      "Username can only contain alphanumeric characters"
-    )
-    .strict(true),
   email: yup
     .string()
     .email("Invalid email format")
@@ -28,20 +16,10 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .required("Password is required")
-    .min(8, "Password must be at least 8 characters")
-    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .matches(/[0-9]/, "Password must contain at least one number")
-    .trim("whitespace not allowed")
-    .strict(true),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match")
-    .required("Confirm password is required")
-    .trim("whitespace not allowed")
     .strict(true),
 });
 
-function Signup() {
+function Signin() {
   const {
     register,
     handleSubmit,
@@ -53,25 +31,24 @@ function Signup() {
 
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const onSubmit = async (formData) => {
     try {
       setLoading(true);
       setError(null);
       //   pass formData to back end
-      const response = await axios.post("/api/user-auth/signup", formData);
+      const response = await axios.post("/api/user-auth/signin", formData);
       const data = response.data;
       if (data.success) {
         setLoading(false);
         setError(null);
         reset();
-        toast.success(data.message)
-        return navigate('/sign-in')
+        toast.success(data.message);
+        return navigate("/");
       }
     } catch (err) {
-      console.log(err);
       if (axios.isAxiosError(err)) {
-        setError(err.response.data.message || "Signup failed");
+        setError(err.response.data.message || "Signin failed");
       } else {
         setError(err.message);
       }
@@ -82,23 +59,9 @@ function Signup() {
 
   return (
     <div className="p-3 max-w-md mx-auto">
-      <h2 className="text-center my-7">Sign Up</h2>
+      <h2 className="text-center my-7">Sign In</h2>
       {error && <p className="text-red-700 text-center mb-2">{error}</p>}
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-        <div className="w-full">
-          <input
-            type="text"
-            placeholder="Username"
-            id="username"
-            name="username"
-            className="bg-slate-100 p-3 rounded-lg w-full border"
-            {...register("username")}
-            maxLength="20"
-          />
-          {errors.username && (
-            <p className="inputError">{errors.username.message}</p>
-          )}
-        </div>
         <div>
           <input
             type="email"
@@ -123,34 +86,21 @@ function Signup() {
             <p className="inputError">{errors.password.message}</p>
           )}
         </div>
-        <div>
-          <input
-            type="password"
-            placeholder="Re-enter your password"
-            id="confirm-password"
-            name="confirmPassword"
-            className="bg-slate-100 p-3 rounded-lg w-full border"
-            {...register("confirmPassword")}
-          />
-          {errors.confirmPassword && (
-            <p className="inputError">{errors.confirmPassword.message}</p>
-          )}
-        </div>
         <button
           disabled={loading}
           className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
         >
-          {loading ? "Loading..." : "Sign up"}
+          {loading ? "Loading..." : "Sign in"}
         </button>
       </form>
       <div className="flex gap-2 mt-5">
-        <p>Have an account?</p>
-        <Link to="/sign-in">
-          <span className="text-blue-500">Sign in</span>
+        <p>{`Don't have an account?`}</p>
+        <Link to="/sign-up">
+          <span className="text-blue-500">Sign up</span>
         </Link>
       </div>
     </div>
   );
 }
 
-export default Signup;
+export default Signin;

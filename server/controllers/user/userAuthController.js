@@ -30,14 +30,12 @@ const userSignup = async (req, res, next) => {
 // User sign in process
 const userSignin = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log("email:", email);
-  console.log("password:", password);
   try {
     const validUser = await User.findOne({ email });
     if (!validUser) return next(errorHandler(404, "User not found"));
 
     const validPassword = bcryptjs.compareSync(password, validUser.password);
-    if (!validPassword) return next(401, "Invalid credentials");
+    if (!validPassword) return next(errorHandler(401, "Invalid credentials"));
 
     // remove the password from user data to send to client side
     const { password: hashedPassword, ...rest } = validUser._doc;
@@ -52,7 +50,7 @@ const userSignin = async (req, res, next) => {
         maxAge: 24 * 60 * 60 * 1000,
       })
       .status(200)
-      .json(rest);
+      .json({ success: true, message: "Signin successful",  userData: rest });
   } catch (err) {
     next(err);
   }
