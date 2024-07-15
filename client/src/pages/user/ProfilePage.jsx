@@ -1,9 +1,9 @@
-
+import Profile from "../../components/user/Profile"
 
 function ProfilePage() {
   return (
     <div>
-      profile
+      <Profile />
     </div>
   )
 }

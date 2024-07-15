@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
         type: String, 
         require: true,
     },
+    profilePicture: {
+        type: String,
+        default: 'https://cdn3.iconfinder.com/data/icons/font-awesome-solid/512/circle-user-512.png'
+    }
     
 }, {timestamps: true});
 
