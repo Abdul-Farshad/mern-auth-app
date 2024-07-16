@@ -47,7 +47,9 @@ const userSignin = async (req, res, next) => {
     res
       .cookie("access_token", token, {
         httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000,
+        maxAge: 60 * 60 * 1000,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
       })
       .status(200)
       .json({ success: true, message: "Signin successful",  userData: rest });
