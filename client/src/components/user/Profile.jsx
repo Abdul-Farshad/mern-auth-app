@@ -6,6 +6,7 @@ import {
   deleteUserStart,
   deleteUserSuccess,
   deleteUserFailure,
+  signOut
 } from "../../redux/user/userSlice";
 
 function Profile() {
@@ -24,11 +25,20 @@ function Profile() {
       dispatch(deleteUserSuccess());
       toast.success(data.message)
     } catch (err) {
-      // Handle errors if necessary
       console.error("Error deleting account:", err);
       dispatch(deleteUserFailure("Failed to delete account"));
+      toast.error("Failed to delete account")
     }
   };
+
+  const handleSignout = async () => {
+    try {
+      await axios.get('/api/user-auth/signout');
+      dispatch(signOut())
+    } catch (err) {
+      console.error(err.message)
+    }
+  }
   return (
     <div className="p-3 max-w-md mx-auto">
       <h2 className="text-center my-7">Profile</h2>
@@ -53,12 +63,12 @@ function Profile() {
       </form>
       <div className="flex justify-between mt-4">
         <span
-          className="text-red-700 cursor-pointer"
+          className="text-red-700 hover:text-red-500 cursor-pointer"
           onClick={handleDeleteAccount}
         >
           Delete account
         </span>
-        <span className="text-red-700 cursor-pointer">Sign out</span>
+        <span className="text-red-700 hover:text-red-500 cursor-pointer" onClick={handleSignout}>Sign out</span>
       </div>
     </div>
   );
