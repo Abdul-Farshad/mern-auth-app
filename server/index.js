@@ -5,9 +5,12 @@ const cookieParser = require("cookie-parser")
 const connectDB = require("./dbConfig");
 const path = require('path')
 
+//user routes
 const userAuth = require("./routes/userRoutes/userAuth.js");
 const uploadProfileImage = require("./routes/userRoutes/uploadProfileImage.js")
 const deleteUserAccount = require("./routes/userRoutes/deleteUserAccount.js")
+//admin routes
+const adminAuth = require("./routes/adminRoutes/adminAuth.js")
 // Database connection
 connectDB(process.env.MONGO_DB_URI);
 
@@ -21,8 +24,9 @@ app.listen(3000, () => console.log("server running on PORT 3000"));
 
 
 app.use("/api/user-auth", userAuth);
-app.use('/api/upload', uploadProfileImage)
+app.use('/api/user/upload', uploadProfileImage)
 app.use('/api/user', deleteUserAccount)
+app.use('/api/admin-auth', adminAuth)
 
 
 app.use((err, req, res, next) => {

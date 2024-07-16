@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import adminLogo from '../../assets/default_avatar.png'
 const Header = () => {
-  const { currentUser } = useSelector((state) => state.user);
   return (
     <div className="bg-slate-200">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3 max-h-14">
@@ -9,13 +8,13 @@ const Header = () => {
         <nav>
           <ul className="flex gap-4">
             <li className="font-semibold p-1 flex items-center">
-              <Link to="/" className="hover:text-gray-600">
-                Home
+              <Link to="/admin/dashboard" className="hover:text-gray-600">
+                Dashboard
               </Link>
             </li>
             <li className="font-semibold p-1">
-              <Link to="/profile" className="hover:text-gray-600">
-                {currentUser ? <img className="h-9 w-9 object-cover rounded-full" src={currentUser.profilePicture} alt="Profile" /> : "Sign In"}
+              <Link to="/" className="hover:text-gray-600">
+                <img className="h-9 w-9 object-cover rounded-full" src={adminLogo} alt="Profile" />
               </Link>
             </li>
           </ul>

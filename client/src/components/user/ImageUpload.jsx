@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 import LoadingAnimation from "../../assets/LoadingAnimation";
+import DefaultAvatar from "../../assets/DefalutAvatar";
 import {
   updateUserStart,
   updateUserSuccess,
@@ -56,13 +57,14 @@ function ImageUpload() {
   const updateDatabaseData = async (imageURL) => {
     try {
       const response = await axios.post(
-        `/api/upload/profile-image/${currentUser._id}`,
+        `/api/user/upload/profile-image/${currentUser._id}`,
         { imageURL },
         {
           headers: { "Content-type": "application/json" },
         }
       );
       const data = response.data;
+
       if (response.status === 200) {
         dispatch(
           updateUserSuccess({
@@ -98,11 +100,15 @@ function ImageUpload() {
           </span>
         </div>
       )}
-      <img
-        className="h-24 w-24 self-center rounded-full object-cover"
-        src={currentUser.profilePicture}
-        alt="Profile"
-      />
+      {currentUser && currentUser.profilePicture ? (
+        <img
+          className="h-24 w-24 self-center rounded-full object-cover"
+          src={currentUser.profilePicture}
+          alt="Profile"
+        />
+      ) : (
+        <DefaultAvatar />
+      )}
       <label
         htmlFor="upload-profile-picture"
         className="absolute right-0 bottom-0 bg-white rounded-full p-2 cursor-pointer shadow-md"
