@@ -6,6 +6,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { toast } from "react-toastify";
+import {signupSuccess} from '../../../redux/user/userSlice'
+import { useDispatch } from "react-redux";
+
+
 // For form validation
 const schema = yup.object().shape({
   username: yup
@@ -54,6 +58,7 @@ function Signup() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const onSubmit = async (formData) => {
     try {
       setLoading(true);
@@ -64,6 +69,7 @@ function Signup() {
       if (data.success) {
         setLoading(false);
         setError(null);
+        dispatch(signupSuccess())
         reset();
         toast.success(data.message)
         return navigate('/sign-in')

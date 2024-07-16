@@ -1,9 +1,34 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ImageUpload from "./ImageUpload";
-
+import axios from "axios";
+import {toast} from 'react-toastify'
+import {
+  deleteUserStart,
+  deleteUserSuccess,
+  deleteUserFailure,
+} from "../../redux/user/userSlice";
 
 function Profile() {
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleDeleteAccount = async () => {
+    try {
+      const response = await axios.delete(`/api/user/delete/${currentUser._id}`);
+      const data = response.data;
+      if (response.status !== 200) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+
+      dispatch(deleteUserSuccess());
+      toast.success(data.message)
+    } catch (err) {
+      // Handle errors if necessary
+      console.error("Error deleting account:", err);
+      dispatch(deleteUserFailure("Failed to delete account"));
+    }
+  };
   return (
     <div className="p-3 max-w-md mx-auto">
       <h2 className="text-center my-7">Profile</h2>
@@ -27,7 +52,12 @@ function Profile() {
         />
       </form>
       <div className="flex justify-between mt-4">
-        <span className="text-red-700 cursor-pointer">Delete account</span>
+        <span
+          className="text-red-700 cursor-pointer"
+          onClick={handleDeleteAccount}
+        >
+          Delete account
+        </span>
         <span className="text-red-700 cursor-pointer">Sign out</span>
       </div>
     </div>

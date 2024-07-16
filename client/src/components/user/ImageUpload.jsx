@@ -63,7 +63,6 @@ function ImageUpload() {
         }
       );
       const data = response.data;
-      console.log(data);
       if (response.status === 200) {
         dispatch(
           updateUserSuccess({
