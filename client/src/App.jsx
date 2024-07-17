@@ -11,22 +11,26 @@ import AdminDashbord from "./pages/admin/AdminDashbord.jsx";
 import AdminLayout from "./pages/admin/AdminLayout.jsx";
 import UserLayout from "./pages/user/userLayout.jsx";
 
-import PrivateRoute from "./components/user/authCheckRoutes/PrivateRoute.jsx";
-import NoAuthRoute from "./components/user/authCheckRoutes/NoAuthRoute.jsx";
+import PrivateRoute from "./components/authCheckRoutes/PrivateRoute.jsx";
+import NoAuthRoute from "./components/authCheckRoutes/NoAuthRoute.jsx";
 import AddNewUserPage from "./pages/admin/AddNewUserPage.jsx";
-
+import AdminPrivateRoute from "./components/authCheckRoutes/AdminPrivateRoute.jsx";
 function App() {
   return (
     <Router>
       <Routes>
-
         <Route element={<AdminLayout />}>
           <Route path="/admin/sign-in" element={<AdminSigninPage />} />
-          <Route path="/admin/dashboard" element={<AdminDashbord />} />
-          <Route path="/admin/dashboard/add-user" element={<AddNewUserPage />} />
+          <Route element={<AdminPrivateRoute />}>
+            <Route path="/admin/dashboard" element={<AdminDashbord />} />
+            <Route
+              path="/admin/dashboard/add-user"
+              element={<AddNewUserPage />}
+            />
+          </Route>
         </Route>
 
-        <Route element={<UserLayout/>}>
+        <Route element={<UserLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route element={<NoAuthRoute />}>
             <Route path="/sign-in" element={<SigninPage />} />

@@ -34,4 +34,9 @@ const adminSigin = async (req, res, next) => {
   }
 };
 
-module.exports = { adminSigin };
+
+const adminSignOut  = (req, res) => {
+  res.clearCookie("admin_token").status(200).json({message: "Sign Out successful"});
+} 
+
+module.exports = { adminSigin , adminSignOut};

@@ -52,6 +52,11 @@ const adminSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        signOut: (state) => {
+            state.loading = false;
+            state.error = null;
+            state.admin = null;
+        }
      }
 })
 
@@ -65,7 +70,8 @@ export const {
     cleanState,
     newUserAddingStarted,
     newUserAddingSuccess,
-    newUserAddingFailed
+    newUserAddingFailed,
+    signOut,
 } = adminSlice.actions;
 
 export default adminSlice.reducer;

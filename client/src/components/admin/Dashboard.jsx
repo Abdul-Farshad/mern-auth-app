@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import EditUser from "./editUser";
 
 function Dashboard() {
-  const { loading, error } = useSelector((state) => state.admin);
   const [page, setPage] = useState(1);
   const [selectedUser, setSelectedUser] = useState(null);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
@@ -70,13 +69,13 @@ function Dashboard() {
   };
 
   const handleEditUserSuccess = (updatedUser) => {
-    console.log("reached success function")
-    console.log(updatedUser)
+    console.log("reached success function");
+    console.log(updatedUser);
     setShowEditUser(false);
     const updatedUsers = users.map((user) =>
       user._id === updatedUser._id ? updatedUser : user
     );
-    console.log("users: ", updatedUsers)
+    console.log("users: ", updatedUsers);
     setUsers(updatedUsers);
   };
 
@@ -120,7 +119,7 @@ function Dashboard() {
             />
           </div>
           <button
-            onClick={() => navigate('/admin/dashboard/add-user')}
+            onClick={() => navigate("/admin/dashboard/add-user")}
             className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded ml-4"
           >
             Add New User
