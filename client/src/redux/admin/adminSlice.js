@@ -38,8 +38,20 @@ const adminSlice = createSlice({
         },
         cleanState: (state) => {
             state.loading = false;
-            state.error = false;
-        } 
+            state.error = null;
+        },
+        newUserAddingStarted: (state) => {
+            state.loading = true;
+            state.error = null;
+        },
+        newUserAddingSuccess: (state) => {
+            state.loading = false;
+            state.error = null;
+        },
+        newUserAddingFailed: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        },
      }
 })
 
@@ -50,7 +62,10 @@ export const {
     userDataUpdatingStarted,
     userDataUpdatingSuccess,
     userDataUpdateFailed,
-    cleanState
+    cleanState,
+    newUserAddingStarted,
+    newUserAddingSuccess,
+    newUserAddingFailed
 } = adminSlice.actions;
 
 export default adminSlice.reducer;

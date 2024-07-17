@@ -13,6 +13,7 @@ import UserLayout from "./pages/user/userLayout.jsx";
 
 import PrivateRoute from "./components/user/authCheckRoutes/PrivateRoute.jsx";
 import NoAuthRoute from "./components/user/authCheckRoutes/NoAuthRoute.jsx";
+import AddNewUserPage from "./pages/admin/AddNewUserPage.jsx";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route element={<AdminLayout />}>
           <Route path="/admin/sign-in" element={<AdminSigninPage />} />
           <Route path="/admin/dashboard" element={<AdminDashbord />} />
+          <Route path="/admin/dashboard/add-user" element={<AddNewUserPage />} />
         </Route>
 
         <Route element={<UserLayout/>}>

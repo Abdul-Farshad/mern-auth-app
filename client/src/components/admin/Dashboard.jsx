@@ -79,7 +79,6 @@ function Dashboard() {
     console.log("users: ", updatedUsers)
     setUsers(updatedUsers);
   };
-  const handleAddUser = () => {};
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -121,7 +120,7 @@ function Dashboard() {
             />
           </div>
           <button
-            onClick={handleAddUser}
+            onClick={() => navigate('/admin/dashboard/add-user')}
             className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded ml-4"
           >
             Add New User

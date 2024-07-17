@@ -14,6 +14,6 @@ router.delete("/delete-user/:id", verifyAdmin, deleteUser);
 // Edit user data
 router.put('/edit-user/:id',verifyAdmin, editUser);
 // Add new User
-router.post('/add-user', addNewUser);
+router.post('/add-user',verifyAdmin, addNewUser);
 
 module.exports = router;
