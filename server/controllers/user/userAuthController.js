@@ -41,13 +41,13 @@ const userSignin = async (req, res, next) => {
     const { password: hashedPassword, ...rest } = validUser._doc;
     // create jwt token
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "1d",
     });
 
     res
       .cookie("access_token", token, {
         httpOnly: true,
-        maxAge: 60 * 60 * 1000,
+        maxAge: 24 * 60 * 60 * 1000, // 1 day
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
       })

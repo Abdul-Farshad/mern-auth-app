@@ -23,7 +23,7 @@ function Profile() {
         return;
       }
 
-      dispatch(deleteUserSuccess());
+      dispatch(deleteUserSuccess());  
       toast.success(data.message)
     } catch (err) {
       console.error("Error deleting account:", err);

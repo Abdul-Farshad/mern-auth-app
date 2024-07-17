@@ -1,9 +1,9 @@
-import React from 'react'
+import Dashboard from "../../components/admin/Dashboard"
 
 function AdminDashbord() {
   return (
     <div>
-      dashboard
+      <Dashboard/>
     </div>
   )
 }

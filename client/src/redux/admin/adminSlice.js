@@ -9,7 +9,7 @@ const initialState = {
 
 const adminSlice = createSlice({
     name: "admin",
-    initialState, 
+    initialState,
     reducers: {
         signInStart: (state) => {
             state.loading = true;
@@ -23,14 +23,34 @@ const adminSlice = createSlice({
         signInFailed: (state, action) => {
             state.loading = false;
             state.error = action.payload;
-        }
+        },
+        userDataUpdatingStarted: (state) => {
+            state.loading = true;
+            state.error = null; 
+        },
+        userDataUpdatingSuccess : (state) => {
+            state.loading = false;
+            state.error = null;
+        },
+        userDataUpdateFailed: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        },
+        cleanState: (state) => {
+            state.loading = false;
+            state.error = false;
+        } 
      }
 })
 
 export const {
     signInStart,
     signInSuccess,
-    signInFailed
+    signInFailed,
+    userDataUpdatingStarted,
+    userDataUpdatingSuccess,
+    userDataUpdateFailed,
+    cleanState
 } = adminSlice.actions;
 
 export default adminSlice.reducer;

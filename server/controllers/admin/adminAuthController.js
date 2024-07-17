@@ -17,13 +17,13 @@ const adminSigin = async (req, res, next) => {
 
     // create jwt token
     const token = jwt.sign({ id: validAdmin._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "1d",
     });
 
     res
-      .cookie("access_token", token, {
+      .cookie("admin_token", token, {
         httpOnly: true,
-        maxAge: 60 * 60 * 1000,
+        maxAge: 24* 60 * 60 * 1000, // 1d
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
       })

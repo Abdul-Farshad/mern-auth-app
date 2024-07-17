@@ -1,5 +1,5 @@
 import "./signup.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link , useNavigate} from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
@@ -8,7 +8,6 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import {signupSuccess} from '../../../redux/user/userSlice'
 import { useDispatch } from "react-redux";
-
 
 // For form validation
 const schema = yup.object().shape({

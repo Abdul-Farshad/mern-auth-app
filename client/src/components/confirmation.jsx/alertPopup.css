@@ -1,0 +1,20 @@
+.small-swal-popup {
+  max-width: 400px;
+}
+
+.small-swal-popup .swal2-title {
+  font-size: 1.25rem;
+}
+
+.small-swal-popup .swal2-content {
+  font-size: 1rem; 
+}
+
+.small-swal-icon {
+  font-size: .6rem;
+}
+
+.small-swal-button {
+  padding: 0.5rem 1rem; 
+  font-size: 0.875rem;
+}

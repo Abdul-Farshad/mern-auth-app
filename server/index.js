@@ -11,6 +11,8 @@ const uploadProfileImage = require("./routes/userRoutes/uploadProfileImage.js")
 const deleteUserAccount = require("./routes/userRoutes/deleteUserAccount.js")
 //admin routes
 const adminAuth = require("./routes/adminRoutes/adminAuth.js")
+const adminRoutes = require("./routes/adminRoutes/adminRoute.js")
+
 // Database connection
 connectDB(process.env.MONGO_DB_URI);
 
@@ -27,6 +29,7 @@ app.use("/api/user-auth", userAuth);
 app.use('/api/user/upload', uploadProfileImage)
 app.use('/api/user', deleteUserAccount)
 app.use('/api/admin-auth', adminAuth)
+app.use('/api/admin', adminRoutes);
 
 
 app.use((err, req, res, next) => {
