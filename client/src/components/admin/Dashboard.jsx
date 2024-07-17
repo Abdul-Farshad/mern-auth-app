@@ -148,7 +148,7 @@ function Dashboard() {
           <tbody className="divide-y divide-gray-200">
             {users.map((user) => (
               <tr key={user._id}>
-                <td className="px-6 py-2 whitespace-nowrap">
+                <td className="px-6 py-2 whitespace-nowrap flex justify-center">
                   <img
                     className="h-14 w-14 object-cover rounded"
                     src={user.profilePicture || "/default-avatar.png"}

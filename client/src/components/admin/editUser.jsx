@@ -69,12 +69,18 @@ const EditUser = ({ user, onCancel, onSuccess }) => {
       toast.success(data.message);
     } catch (err) {
       if (axios.isAxiosError(err)) {
+        console.log(err.response.data.message)
+        if(err.response.status === 404 && err.response.data.message === "User not found") {
+            const errMsg = err.response.data.message;
+            toast.error(errMsg);
+            dispatch(cleanState())
+            return;
+        } 
         dispatch(
           userDataUpdateFailed(
             err.response?.data.message || "Something went wrong!"
           )
         );
-        toast.error(error);
       } else {
         console.error(err);
       }
