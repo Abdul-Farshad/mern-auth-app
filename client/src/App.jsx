@@ -10,17 +10,20 @@ import AdminSigninPage from "./pages/admin/AdminSigninPage.jsx";
 import AdminDashbord from "./pages/admin/AdminDashbord.jsx";
 import AdminLayout from "./pages/admin/AdminLayout.jsx";
 import UserLayout from "./pages/user/userLayout.jsx";
-
+import AdminNoAuthRoute from "./components/authCheckRoutes/AdminNoAuthRoute.jsx";
 import PrivateRoute from "./components/authCheckRoutes/PrivateRoute.jsx";
 import NoAuthRoute from "./components/authCheckRoutes/NoAuthRoute.jsx";
 import AddNewUserPage from "./pages/admin/AddNewUserPage.jsx";
 import AdminPrivateRoute from "./components/authCheckRoutes/AdminPrivateRoute.jsx";
+
 function App() {
   return (
     <Router>
       <Routes>
         <Route element={<AdminLayout />}>
-          <Route path="/admin/sign-in" element={<AdminSigninPage />} />
+          <Route element={<AdminNoAuthRoute />}>
+            <Route path="/admin/sign-in" element={<AdminSigninPage />} />
+          </Route>
           <Route element={<AdminPrivateRoute />}>
             <Route path="/admin/dashboard" element={<AdminDashbord />} />
             <Route

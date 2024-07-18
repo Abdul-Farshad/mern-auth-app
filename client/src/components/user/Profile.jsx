@@ -34,8 +34,9 @@ function Profile() {
 
   const handleSignout = async () => {
     try {
-      await axios.get('/api/user-auth/signout');
+      const response = await axios.get('/api/user-auth/signout');
       dispatch(signOut())
+      toast.success(response.data.message)
     } catch (err) {
       console.error(err.message)
     }
