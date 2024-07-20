@@ -1,0 +1,5 @@
+Entry: 
+    user: sign-in
+    admin: admin/sign-in
+
+add admin to database: (cmd) :- node scripts/seedAdmin.js
