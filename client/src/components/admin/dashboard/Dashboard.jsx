@@ -128,10 +128,7 @@ function Dashboard() {
         />
       )}
       <h2 className="text-2xl font-semibold mb-4">Dashboard</h2>
-      {/* {loading ? ( */}
-      {/* <p className="text-gray-500">Loading...</p> */}
-      {/* ) : ( */}
-      <div className="overflow-hidden bg-white rounded-lg shadow-md">
+      <div className=" overflow-hidden bg-white rounded-lg shadow-md">
         <div className="flex justify-between items-center bg-slate-200 p-2">
           <div className="flex-1 flex justify-center">
             <input
@@ -150,7 +147,7 @@ function Dashboard() {
           </button>
         </div>
 
-        <table className="min-w-full divide-y divide-gray-200">
+        <table className="table-container min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider ">
@@ -204,6 +201,39 @@ function Dashboard() {
           </tbody>
         </table>
       </div>
+      <div className="mobile-table">
+        {users.map((user) => (
+          <div key={user._id} className="user-card">
+            <img
+              className="h-14 w-14 object-cover rounded"
+              src={user.profilePicture || "/default-avatar.png"}
+              alt="Profile"
+            />
+            <div className="user-info">
+              <p>
+                <strong>Username:</strong> {user.username}
+              </p>
+              <p>
+                <strong>Email:</strong> {user.email}
+              </p>
+            </div>
+            <div className="user-actions">
+              <button
+                onClick={() => handleEditUser(user)}
+                className="text-blue-500 hover:text-blue-700 p-1"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDeleteUser(user)}
+                className="text-red-500 hover:text-red-700 mr-2 p-1"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
       <ReactPaginate
         previousLabel={"Previous"}
         nextLabel={"Next"}
@@ -217,6 +247,7 @@ function Dashboard() {
         activeClassName={"active"}
       />
     </div>
+
   );
 }
 

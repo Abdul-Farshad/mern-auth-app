@@ -1,34 +1,67 @@
 .pagination {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: center;
-    padding: 10px 0;
-    list-style-type: none;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  list-style-type: none;
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination li a {
+  border-radius: 0.25rem;
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  color: #333;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.pagination li a:hover {
+  background-color: slategray;
+  color: white;
+}
+
+.pagination .active a {
+  background-color: rgba(51, 65, 85, 1);
+  border-color: rgba(51, 65, 85, 0.1);
+  color: white;
+}
+.pagination .active a:hover {
+  background-color: rgb(51, 65, 85, 1);
+}
+/* ---------------------------------------------------- */
+.user-card {
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin: 8px 0;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.user-info p {
+  margin: 3px 0;
+}
+
+.user-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 12px;
+}
+
+@media (max-width: 480px) {
+  .table-container {
+    display: none;
   }
-  
-  .pagination li {
-    margin: 0 5px;
+  .mobile-table {
+    display: block;
   }
-  
-  .pagination li a {
-    border-radius: 0.25rem;
-    padding: 8px 16px;
-    border: 1px solid #ddd;
-    color: #333;
-    cursor: pointer;
-    text-decoration: none;
+}
+@media (min-width: 481px) {
+  .mobile-table {
+    display: none;
   }
-  
-  .pagination li a:hover {
-    background-color: slategray;
-    color: white;
-  }
-  
-  .pagination .active a {
-    background-color: rgba(51, 65, 85, 1);
-    border-color: rgba(51, 65, 85, 0.1);
-    color: white;
-  }
-  .pagination .active a:hover {
-    background-color: rgb(51, 65, 85,1);
-  }
+}
