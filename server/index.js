@@ -4,6 +4,7 @@ require("dotenv").config();
 const cookieParser = require("cookie-parser")
 const connectDB = require("./dbConfig");
 const path = require('path')
+const cors = require('cors');
 
 //user routes
 const userAuth = require("./routes/userRoutes/userAuth.js");
@@ -17,11 +18,11 @@ const adminRoutes = require("./routes/adminRoutes/adminRoute.js")
 connectDB(process.env.MONGO_DB_URI);
 
 const app = express();
-
-app.use(express.static(path.join(__dirname, '/client/dist')));
+app.use(cors());
+app.use(express.static(path.join(__dirname,'..', 'client', 'dist')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname,'..', 'client', 'dist', 'index.html'));
 });
 
 app.use(express.json());
