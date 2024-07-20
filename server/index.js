@@ -18,11 +18,18 @@ connectDB(process.env.MONGO_DB_URI);
 
 const app = express();
 
+app.use(express.static(path.join(__dirname, '/client/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+});
+
 app.use(express.json());
 app.use(cookieParser())
 app.use("/uploads", express.static(path.join(__dirname, "./uploads")))
 
-app.listen(3000, () => console.log("server running on PORT 3000"));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`server running on PORT ${PORT}`));
 
 
 app.use("/api/user-auth", userAuth);
