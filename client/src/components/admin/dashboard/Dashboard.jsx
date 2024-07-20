@@ -5,9 +5,9 @@ import axios from "axios";
 import AlertPopup from "../../confirmation.jsx/AlertPopup";
 import { useNavigate } from "react-router-dom";
 import EditUser from "../editUser";
-import { adminSignOut } from '../../../redux/admin/adminSlice'
+import { adminSignOut } from "../../../redux/admin/adminSlice";
 import ReactPaginate from "react-paginate";
-import './dashboard.css'
+import "./dashboard.css";
 function Dashboard() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -21,14 +21,13 @@ function Dashboard() {
 
   useEffect(() => {
     const checkAdminAuth = async () => {
-        try {
-        const response = await axios.get('/api/admin-auth/check-auth');
-        console.log("res: ",response)
+      try {
+        const response = await axios.get("/api/admin-auth/check-auth");
         if (response.status !== 200) {
           dispatch(adminSignOut());
         }
       } catch (err) {
-        console.log("checkAdminAuth error : ", err)
+        console.log("checkAdminAuth error : ", err);
         dispatch(adminSignOut());
       }
     };
@@ -46,19 +45,20 @@ function Dashboard() {
       } catch (err) {
         console.log(err);
         if (axios.isAxiosError(err)) {
-          if (err.response.status === 401 ) {
+          if (err.response.status === 401) {
             navigate("/admin/sign-in");
           }
         }
       }
     };
-    
+
     checkAdminAuth().then(() => {
+      console.log("here");
       fetchUsers();
-    })
+    });
   }, [searchTerm, page, dispatch]);
 
-  // Pagination 
+  // Pagination
   const handlePageClick = (e) => {
     setPage(e.selected + 1);
   };
