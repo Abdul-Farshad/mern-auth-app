@@ -7,7 +7,7 @@ import {
   deleteUserStart,
   deleteUserSuccess,
   deleteUserFailure,
-  signOut
+  userSignOut
 } from "../../redux/user/userSlice";
 
 function Profile() {
@@ -35,7 +35,7 @@ function Profile() {
   const handleSignout = async () => {
     try {
       const response = await axios.get('/api/user-auth/signout');
-      dispatch(signOut())
+      dispatch(userSignOut())
       toast.success(response.data.message)
     } catch (err) {
       console.error(err.message)

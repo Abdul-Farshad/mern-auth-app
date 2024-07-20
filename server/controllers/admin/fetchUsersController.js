@@ -2,7 +2,7 @@ const User = require("../../models/userModel");
 const errorHandler = require("../../utils/error");
 const fetchUsers = async (req, res, next) => {
   try {
-    const { page = 1, limit = 20, search = "" } = req.query;
+    const { page = 1, limit = 5, search = "" } = req.query;
     const query = search
       ? {
           $or: [

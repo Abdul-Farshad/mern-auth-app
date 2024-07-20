@@ -1,21 +1,38 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import axios from "axios";
-import AlertPopup from "../confirmation.jsx/AlertPopup";
+import AlertPopup from "../../confirmation.jsx/AlertPopup";
 import { useNavigate } from "react-router-dom";
-import EditUser from "./editUser";
-
+import EditUser from "../editUser";
+import { adminSignOut } from '../../../redux/admin/adminSlice'
+import ReactPaginate from "react-paginate";
+import './dashboard.css'
 function Dashboard() {
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [selectedUser, setSelectedUser] = useState(null);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [showEditUser, setShowEditUser] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    const checkAdminAuth = async () => {
+        try {
+        const response = await axios.get('/api/admin-auth/check-auth');
+        console.log("res: ",response)
+        if (response.status !== 200) {
+          dispatch(adminSignOut());
+        }
+      } catch (err) {
+        console.log("checkAdminAuth error : ", err)
+        dispatch(adminSignOut());
+      }
+    };
+
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
@@ -24,20 +41,27 @@ function Dashboard() {
         const data = response.data;
         if (data.users) {
           setUsers(data.users);
+          setTotalPages(data.pagination.totalPages);
         }
       } catch (err) {
         console.log(err);
         if (axios.isAxiosError(err)) {
-          // setError(err.response.data.message || "Signup failed");
-          if (err.response.status === 401) {
-            console.log(err.response);
-            // navigate("/admin/sign-in");
+          if (err.response.status === 401 ) {
+            navigate("/admin/sign-in");
           }
         }
       }
     };
-    fetchUsers();
-  }, [searchTerm, page]);
+    
+    checkAdminAuth().then(() => {
+      fetchUsers();
+    })
+  }, [searchTerm, page, dispatch]);
+
+  // Pagination 
+  const handlePageClick = (e) => {
+    setPage(e.selected + 1);
+  };
 
   // Delete User -->
   const handleDeleteUser = async (userId) => {
@@ -180,16 +204,18 @@ function Dashboard() {
           </tbody>
         </table>
       </div>
-      {/* )} */}
-      {/* <div>
-            <button onClick={() => setPage(page - 1)} disabled={page === 1}>
-              Previous
-            </button>
-            <span>Page {page} of {?.totalPages}</span>
-            <button onClick={() => setPage(page + 1)} disabled={page === pagination?.totalPages}>
-              Next
-            </button>
-          </div> */}
+      <ReactPaginate
+        previousLabel={"Previous"}
+        nextLabel={"Next"}
+        breakLabel={"..."}
+        pageCount={totalPages}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={3}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination"}
+        subContainerClassName={"pages pagination"}
+        activeClassName={"active"}
+      />
     </div>
   );
 }

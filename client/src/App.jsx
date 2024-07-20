@@ -5,7 +5,6 @@ import HomePage from "./pages/user/HomePage";
 import SigninPage from "./pages/user/SigninPage";
 import SignupPage from "./pages/user/SignupPage";
 import ProfilePage from "./pages/user/ProfilePage.jsx";
-import Header from "./components/user/Header";
 import AdminSigninPage from "./pages/admin/AdminSigninPage.jsx";
 import AdminDashbord from "./pages/admin/AdminDashbord.jsx";
 import AdminLayout from "./pages/admin/AdminLayout.jsx";
@@ -16,7 +15,7 @@ import NoAuthRoute from "./components/authCheckRoutes/NoAuthRoute.jsx";
 import AddNewUserPage from "./pages/admin/AddNewUserPage.jsx";
 import AdminPrivateRoute from "./components/authCheckRoutes/AdminPrivateRoute.jsx";
 
-function App() {
+function App() { 
   return (
     <Router>
       <Routes>
@@ -44,7 +43,7 @@ function App() {
           </Route>
         </Route>
       </Routes>
-      <ToastContainer position="bottom-right" pauseOnHover={false} />
+      <ToastContainer position="bottom-right" pauseOnHover={false} pauseOnFocusLoss={false} />
     </Router>
   );
 }

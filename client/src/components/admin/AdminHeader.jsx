@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { signOut } from "../../redux/admin/adminSlice";
+import { adminSignOut } from "../../redux/admin/adminSlice";
 import { toast } from "react-toastify";
 const Header = () => {
   const { admin } = useSelector((state) => state.admin);
@@ -10,14 +10,14 @@ const Header = () => {
   const handleSignout = async () => {
     try {
       const response = await axios.get("/api/admin-auth/signout");
-      dispatch(signOut());
+      dispatch(adminSignOut());
       toast.success(response.data.message)
     } catch (err) {
       console.error(err.message);
     }
   };
   return (
-    <div className="bg-slate-900 text-slate-200">
+    <div className="fixed top-0 left-0 right-0 z-50 bg-slate-900 text-slate-200">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3 max-h-14">
         <h3 className="font-bold text-xl">Auth App</h3>
         {admin && (

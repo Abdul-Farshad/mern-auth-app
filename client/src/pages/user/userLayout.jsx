@@ -3,8 +3,10 @@ import { Outlet } from "react-router-dom";
 export default function UserLayout() {
   return (
     <div>
-      <UserHeader/>
-      <Outlet/>
+      <UserHeader />
+      <div className="pt-14">
+        <Outlet />
+      </div>
     </div>
   );
 }

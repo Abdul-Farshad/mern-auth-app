@@ -1,4 +1,25 @@
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import {userSignOut} from '../../redux/user/userSlice';
+import axios from "axios";
+
 function Home() {
+const dispatch = useDispatch();
+  useEffect(() => {
+    const checkUserAuth = async () => {
+      try {
+        const response = await axios.get('/api/user-auth/check-auth');
+        if (response.status !== 200) {
+          dispatch(userSignOut());
+        }
+      } catch (err) {
+        console.error("user auth check error: ", err)
+        dispatch(userSignOut());
+      }
+    };
+    checkUserAuth();
+  }, [dispatch]);
+
   return (
     <div className="px-4 py-12 max-w-2xl mx-auto">
       <h1 className="mb-4 text-slate-800 text-center">Welcome to home page</h1>
